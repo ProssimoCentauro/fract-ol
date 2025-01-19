@@ -7,6 +7,27 @@
 
 #include "stdint.h"
 
+#define MAX_ITERATIONS 50
+
+typedef struct  complex_num
+{
+    double  xr;
+    double  xi;
+}   complex_num;
+
+typedef struct  s_fractal
+{
+    double  zr;
+    double  zi;
+    double  cr;
+    double  ci;
+    double  min_re;
+    double  max_re;
+    double  min_im;
+    double  max_im;
+    unsigned int base_color;
+}   t_fractal;
+
 typedef	struct	s_app
 {
 	void	*mlx;
@@ -18,5 +39,7 @@ typedef	struct	s_app
 	int bits_per_pixel;
 	int size_line;
 	int endian;
+    t_fractal f;
+    char    *selected_fractal;
 }	t_app;
 #endif
