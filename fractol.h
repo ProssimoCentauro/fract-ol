@@ -5,6 +5,7 @@
 # include "libft/header_files/libft.h"
 # include "minilibx-linux/mlx.h"
 # include "stdint.h"
+# include <math.h>
 
 # define MAX_ITERATIONS 100
 
@@ -38,13 +39,15 @@ typedef struct s_app
 	int				bits_per_pixel;
 	int				size_line;
 	int				endian;
+	int	i;
+	int	j;
 	t_fractal		f;
 	char			*selected_fractal;
 }					t_app;
 
 int     key_hook(int keycode, void *param);
 void    color_handler(t_app *app);
-void    exit_handler(int key_code, t_app *param);
+int    exit_handler(t_app *param);
 int     events_handler(int key_code, t_app *app);
 void    win_pixel_put(t_app *app, int x, int y, int color);
 int     ft_strcmp(char *s1, char *s2);

@@ -27,7 +27,7 @@ void	move_handler(int key, t_app *app)
 	if (f->set == 1)
 		draw_julia(app);
 	if (f->set == 2)
-		draw_mandelbrot(app, 0, 0);
+		draw_ships(app, 0, 0);
 	
 }
 
@@ -53,28 +53,27 @@ void	color_handler(t_app *app)
 	else if (f->set == 1)
 		draw_julia(app);
 	else if (f->set == 2)
-		draw_mandelbrot(app, 0, 0);
+		draw_ships(app, 0, 0);
 }
 
-void	exit_handler(int key, t_app *app)
+int	exit_handler(t_app *app)
 {
-	if (key == 65307)
-	{
-		mlx_destroy_image(app->mlx, app->image);
-		mlx_destroy_window(app->mlx, app->window);
-		mlx_destroy_display(app->mlx);
-		free(app->mlx);
-		free(app->selected_fractal);
-		exit(EXIT_SUCCESS);
-	}
+	mlx_destroy_image(app->mlx, app->image);
+	mlx_destroy_window(app->mlx, app->window);
+	mlx_destroy_display(app->mlx);
+	free(app->mlx);
+	free(app->selected_fractal);
+	exit(EXIT_SUCCESS);
+	return (0);
 }
+
 
 
 
 int	events_handler(int key, t_app *app)
 {
-	if (key == 65307)
-		exit_handler(key, app);
+	if (key == 65307 || key == 17)
+		exit_handler(app);
 	else if (key == 99)
 		color_handler(app);
 	else if (key == 65361 || key == 65362 || key == 65363 || key == 65364 || key == 65451 || key == 65453)
@@ -127,7 +126,7 @@ void	fractal_select(char *input, t_app *app)
 	}
 	else if (ft_strcmp(input, "Burning Ships") || ft_strcmp(input, "b"))
 	{
-		draw_mandelbrot(app, 0 ,0);
+		draw_ships(app, 0 ,0);
 	}
 }
 
@@ -144,10 +143,6 @@ void	fractal_init(t_fractal *f, char *input)
 	f->zi = 0;
 	f->cr = 0;
 	f->ci = 0;
-	//f->min_re = -2.0;
-	//f->max_re = 2.0;
-	//f->min_im = -2.0;
-	//f->max_im = 2.0;
 	f->base_color = 0x000000FF;
 	f->up = 0;
 	f->right = 0;
@@ -159,6 +154,8 @@ void	app_init(t_app *app, char *str)
 	app->selected_fractal = ft_strdup(str);
 	app->width = 1000;
 	app->height = 1000;
+	app->i = -1;
+	app->j = -1;
 	app->mlx = mlx_init();
 	app->window = mlx_new_window(app->mlx, app->width, app->height,
 			"FRACT-OL!");
@@ -168,7 +165,7 @@ void	app_init(t_app *app, char *str)
 	fractal_init(&app->f, str);
 }
 
-int	mouse_debug(int key, int x, int y, t_app *app)
+int	mouse_handler(int key, int x, int y, t_app *app)
 {
 	t_fractal	*f;
 	f = &app->f;
@@ -182,7 +179,7 @@ int	mouse_debug(int key, int x, int y, t_app *app)
 	else if (f->set == 1)
 		draw_julia(app);
 	else if (f->set == 2)
-		draw_mandelbrot(app, x, y);
+		draw_ships(app, x, y);
 	return (0);
 }
 
@@ -194,7 +191,8 @@ int	main(int ac, char **av)
 	fractal_select(app.selected_fractal, &app);
 	// mlx_put_image_to_window(app.mlx, app.window, app.image, 0, 0);
 	mlx_key_hook(app.window, events_handler, &app);
-	mlx_mouse_hook(app.window, mouse_debug, &app);
+	mlx_mouse_hook(app.window, mouse_handler, &app);
+	mlx_hook(app.window, 17, 0, exit_handler, &app);
 	//mlx_key_hook(app.window, key_hook, NULL);
 	// setup_hooks(&app);
 	mlx_loop(app.mlx);
