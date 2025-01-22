@@ -1,5 +1,6 @@
 #include "fractol.h"
 #include "draw_functions.c"
+#include "utils.c"
 #include "minilibx-linux/mlx.h"
 
 int	key_hook(int keycode, void *param)
@@ -187,14 +188,13 @@ int	main(int ac, char **av)
 {
 	t_app	app;
 
+    if (!ft_check_input(ac, av[1], av[2], av[3]))
+        exit(EXIT_FAILURE);
 	app_init(&app, av[1]);
 	fractal_select(app.selected_fractal, &app);
-	// mlx_put_image_to_window(app.mlx, app.window, app.image, 0, 0);
 	mlx_key_hook(app.window, events_handler, &app);
 	mlx_mouse_hook(app.window, mouse_handler, &app);
 	mlx_hook(app.window, 17, 0, exit_handler, &app);
-	//mlx_key_hook(app.window, key_hook, NULL);
-	// setup_hooks(&app);
 	mlx_loop(app.mlx);
 	return (0);
 }
