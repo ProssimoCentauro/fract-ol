@@ -52,11 +52,14 @@ int     events_handler(int key_code, t_app *app);
 void    win_pixel_put(t_app *app, int x, int y, int color);
 int     ft_strcmp(char *s1, char *s2);
 void    fractal_select(char *input, t_app *app);
-void    fractal_init(t_fractal *f, char *input);
-void    app_init(t_app *app, char *str);
+void    fractal_init(t_fractal *f, char *input, double cr, double ci);
+void    app_init(t_app *app, char *str, double cr, double ci);
 int     mouse_debug(int button, int x, int y, t_app *param);
 
-
-
-
+//utils
+int ft_check_num(char *str);
+void    check_and_initialize(t_app *app, int ac, char **av);
+int ft_check_fractal_name(char *input);
+int ft_check_input(int ac, char *s1, char *s2, char *s3);
+double  ft_atod(char *str);
 #endif

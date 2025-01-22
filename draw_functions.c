@@ -35,16 +35,15 @@ void	put_color(t_app *app, int iter)
 	int			color;
 	t_fractal	*f;
 
-
-	if (iter == MAX_ITERATIONS)
+    if (iter == MAX_ITERATIONS)
 	{
 		win_pixel_put(app, app->i, app->j, 0x00000000);
 		return ;
 	}
 	f = &app->f;
-	r = ((f->base_color >> 16) & 0xFF) * ((double)iter / MAX_ITERATIONS);
-	g = ((f->base_color >> 8) & 0xFF) * ((double)iter / MAX_ITERATIONS);
-	b = (f->base_color & 0xFF) * ((double)iter / MAX_ITERATIONS);
+	r = ((f->base_color >> 16) & 0xFF) * sqrt(((double)iter / MAX_ITERATIONS));
+	g = ((f->base_color >> 8) & 0xFF) * sqrt(((double)iter / MAX_ITERATIONS));
+	b = (f->base_color & 0xFF) * sqrt(((double)iter / MAX_ITERATIONS));
 	color = (r << 16) | (g << 8) | b;
 	win_pixel_put(app, app->i, app->j, color);
 }
@@ -125,8 +124,6 @@ void	draw_julia(t_app *app)
 		{
 			iter = -1;
 			complex_calculator(app, 0, 1, 0);
-			f->cr = -0.8;
-			f->ci = 0.156;
 			while ((f->zr * f->zr) + (f->zi * f->zi) <= 4
 				&& ++iter < MAX_ITERATIONS)
 			{

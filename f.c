@@ -43,9 +43,9 @@ void	color_handler(t_app *app)
 	else if (i == 1)
 		f->base_color = 0x0000FF00;
 	else if (i == 2)
-		f->base_color = 0x00FFFF00;
-	else if (i == 3)
 		f->base_color = 0x000000FF;
+	else if (i == 3)
+		f->base_color = 0x00FFFF00;
 	i++;
 	if (i == 4)
 		i = 0;
@@ -68,9 +68,6 @@ int	exit_handler(t_app *app)
 	return (0);
 }
 
-
-
-
 int	events_handler(int key, t_app *app)
 {
 	if (key == 65307 || key == 17)
@@ -88,16 +85,6 @@ void	win_pixel_put(t_app *app, int x, int y, int color)
 
 	dst = app->img_addr + (y * app->size_line + x * (app->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
-}
-
-double	c_calculator(void)
-{
-	return (0.0);
-}
-
-void	max_init(t_fractal *f)
-{
-	return ;
 }
 
 int	ft_strcmp(char *s1, char *s2)
@@ -131,7 +118,7 @@ void	fractal_select(char *input, t_app *app)
 	}
 }
 
-void	fractal_init(t_fractal *f, char *input)
+void	fractal_init(t_fractal *f, char *input, double cr, double ci)
 {
 	
 	if (ft_strcmp(input, "Mandelbrot") || ft_strcmp(input, "m"))
@@ -142,15 +129,15 @@ void	fractal_init(t_fractal *f, char *input)
 		f->set = 2;
 	f->zr = 0;
 	f->zi = 0;
-	f->cr = 0;
-	f->ci = 0;
-	f->base_color = 0x000000FF;
+	f->cr = cr;
+	f->ci = ci;
+	f->base_color = 0x00FFFF00;
 	f->up = 0;
 	f->right = 0;
 	f->zoom = 1;
 }
 
-void	app_init(t_app *app, char *str)
+void	app_init(t_app *app, char *str, double cr, double ci)
 {
 	app->selected_fractal = ft_strdup(str);
 	app->width = 1000;
@@ -163,7 +150,7 @@ void	app_init(t_app *app, char *str)
 	app->image = mlx_new_image(app->mlx, app->width, app->height);
 	app->img_addr = mlx_get_data_addr(app->image, &app->bits_per_pixel,
 			&app->size_line, &app->endian);
-	fractal_init(&app->f, str);
+	fractal_init(&app->f, str, cr, ci);
 }
 
 int	mouse_handler(int key, int x, int y, t_app *app)
@@ -188,9 +175,7 @@ int	main(int ac, char **av)
 {
 	t_app	app;
 
-    if (!ft_check_input(ac, av[1], av[2], av[3]))
-        exit(EXIT_FAILURE);
-	app_init(&app, av[1]);
+    check_and_initialize(&app, ac, av);
 	fractal_select(app.selected_fractal, &app);
 	mlx_key_hook(app.window, events_handler, &app);
 	mlx_mouse_hook(app.window, mouse_handler, &app);

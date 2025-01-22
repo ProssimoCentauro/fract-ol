@@ -1,39 +1,56 @@
 #include "fractol.h"
 
-int ft_check_fractal_name(char *s1)
+void	check_and_initialize(t_app *app, int ac, char **av)
 {
-     if (ft_strcmp(input, "Mandelbrot") ||
-             ft_strcmp(input, "m"))
-         return (1);
-     else if (ft_strcmp(input, "Julia") ||
-             ft_strcmp(input, "j"))
-         return (2);
-     else if (ft_strcmp(input, "Burning Ships") ||
-             ft_strcmp(input, "b"))
-        return (3);
-     return (0);
+	if (!ft_check_input(ac, av[1], av[2], av[3]))
+	{
+		ft_printf("bad args!");
+		exit(EXIT_FAILURE);
+	}
+	else if (ft_check_input(ac, av[1], av[2], av[3]) == 1)
+		app_init(app, av[1], 0, 0);
+	else if (ft_check_input(ac, av[1], av[2], av[3]) == 2)
+		app_init(app, av[1], 0.23, 0.5433);
+	else if (ft_check_input(ac, av[1], av[2], av[3]) == 3)
+		app_init(app, av[1], 0, 0);
+	else if (ft_check_input(ac, av[1], av[2], av[3]) == 4)
+		app_init(app, av[1], ft_atod(av[2]), ft_atod(av[3]));
 }
 
-int ft_check_input(int ac, char *s1, char *s2, char *s3)
+int	ft_check_fractal_name(char *input)
 {
-    int f;
-    
-    f = ft_check_fractal_name(s1);
-    if (!f)
-        return (0);
-    if (f == 1 && ac != 2)
-        return (0);
-    if (f == 3 && ac != 2)
-        return (0);
-    if (f == 2 && ac == 4)
-    {
-        if (!ft_check_num(s2) || !ft_check_num(s3))
-            return (0);
-        return (1);
-    }
-    else
-        return (0);
-    return (1);
+	if (ft_strcmp(input, "Mandelbrot") || ft_strcmp(input, "m"))
+		return (1);
+	else if (ft_strcmp(input, "Julia") || ft_strcmp(input, "j"))
+		return (2);
+	else if (ft_strcmp(input, "Burning Ships") || ft_strcmp(input, "b"))
+		return (3);
+	return (0);
+}
+
+int	ft_check_input(int ac, char *s1, char *s2, char *s3)
+{
+	int	f;
+
+	if (ac == 1)
+		return (0);
+	f = ft_check_fractal_name(s1);
+	ft_printf("%d\n", f);
+	if (!f)
+		return (0);
+	else if (f == 1 && ac == 2)
+		return (1);
+	else if (f == 2 && ac == 2)
+		return (2);
+	else if (f == 3 && ac == 2)
+		return (3);
+	else if (f == 2 && ac == 4)
+	{
+		if (!ft_check_num(s2) || !ft_check_num(s3))
+			return (0);
+		return (4);
+	}
+	return (0);
 }
 
 int	ft_check_num(char *str)
