@@ -1,9 +1,9 @@
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# include "libft/header_files/ft_printf.h"
-# include "libft/header_files/libft.h"
-# include "minilibx-linux/mlx.h"
+# include "../libft/header_files/ft_printf.h"
+# include "../libft/header_files/libft.h"
+# include "../minilibx-linux/mlx.h"
 # include "stdint.h"
 # include <math.h>
 
@@ -56,6 +56,13 @@ void				fractal_select(t_app *app);
 void				fractal_init(t_fractal *f, int f_set, double cr, double ci);
 void				app_init(t_app *app, int f_set, double cr, double ci);
 int					mouse_debug(int button, int x, int y, t_app *param);
+
+// draw_functions.c
+void    complex_calculator(t_app *app, int m, int j, int b);
+void    put_color(t_app *app, int iter);
+void    draw_ships(t_app *app);
+void    draw_mandelbrot(t_app *app);
+void    draw_julia(t_app *app);
 
 // input_checker_utils.c
 int					ft_check_num(char *str);

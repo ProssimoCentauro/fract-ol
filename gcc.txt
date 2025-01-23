@@ -1,1 +1,0 @@
-gcc main.c libft/libft.a minilibx-linux/libmlx_Linux.a -Imlx -Lmlx -lX11 -lXext -lm -g

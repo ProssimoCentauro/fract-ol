@@ -1,32 +1,40 @@
 #Variables
 NAME = fractol
 
-SRCS_PATH = ./srcs/
-HEADER_PATH = ./header/
+SRCS_DIR = ./srcs/
+HEADER_DIR = ./header/
 LIBFT = ./libft/libft.a
 MINILIBX = ./minilibx-linux/libmlx_Linux.a
 
-SRCS =	$(SRCS_PATH)fractol.c $(SRCS_PATH)draw_functions.c $(SRCS_PATH)handlers.c \
-	$(SRCS_PATH)utils.c $(SRCS_PATH)prints.c $(SRCS_PATH)init_functions.c \
-	$(SRCS_PATH)input_checker_functions.c
+SRCS =	$(SRCS_DIR)fractol.c $(SRCS_DIR)draw_functions.c $(SRCS_DIR)handlers.c \
+	$(SRCS_DIR)utils.c $(SRCS_DIR)prints.c $(SRCS_DIR)init_functions.c \
+	$(SRCS_DIR)input_checker_utils.c
 
 OBJS = $(SRCS:.c=.o)
 
+CONFIGURE = cd minilibx-linux && ./configure && cd ..
 #Compilation
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-IFLAGS = -I $(HEADER_PATH)
+IFLAGS = -I $(HEADER_DIR)
 MINIFLAGS = -Imlx -Lmlx -lX11 -lXext
 
 #Rules
 all: $(NAME)
 
-libft: $(LIBFT)
+%.o: %.c
+	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
+
+$(LIBFT):
 	@echo "Compiling Libft..."
 	@make -C ./libft
 
-fractol: $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(IFLAGS) $(OBJS) $(MINIFLAGS) -lm $(LIBFT) -o fractol
+$(MINILIBX):
+	@echo "Compiling MiniLibX..."
+	@make -C ./minilibx-linux && $(CONFIGURE)
+
+fractol: $(OBJS) $(LIBFT) $(MINILIBX)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MINILIBX) $(MINIFLAGS) -lm -o fractol
 
 clean:
 	@echo "Cleaning object files..."
@@ -37,5 +45,6 @@ fclean: clean
 	@echo "Cleaning binaries..."
 	@rm -f $(NAME)
 	@make -C ./libft fclean
+	@make -C ./minilibx-linux clean
 
 re: fclean all
