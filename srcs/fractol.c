@@ -1,10 +1,10 @@
-#include "draw_functions.c"
 #include "fractol.h"
+/*#include "draw_functions.c"
 #include "handlers.c"
 #include "init_functions.c"
 #include "input_checker_utils.c"
 #include "utils.c"
-#include "prints.c"
+#include "prints.c"*/
 
 void	win_pixel_put(t_app *app, int x, int y, int color)
 {
