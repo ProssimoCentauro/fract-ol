@@ -15,6 +15,11 @@ void	change_values(t_app *app, double n1, double n2, int flag)
 		f->cr = n1;
 		f->ci = n2;
 	}
+	else if (flag == 3)
+	{
+		app->mouse_x = n1;
+		app->mouse_y = n2;
+	}
 }
 
 int	ft_strcmp(char *s1, char *s2)

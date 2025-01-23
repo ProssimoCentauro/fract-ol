@@ -4,7 +4,7 @@ void	check_and_initialize(t_app *app, int ac, char **av)
 {
 	if (!ft_check_input(ac, av[1], av[2], av[3]))
 	{
-		ft_printf("bad args!");
+		print_usage_error();
 		exit(EXIT_FAILURE);
 	}
 	else if (ft_check_input(ac, av[1], av[2], av[3]) == 1)
@@ -15,6 +15,7 @@ void	check_and_initialize(t_app *app, int ac, char **av)
 		app_init(app, 2, 0, 0);
 	else if (ft_check_input(ac, av[1], av[2], av[3]) == 4)
 		app_init(app, 1, ft_atod(av[2]), ft_atod(av[3]));
+	print_manual();
 }
 
 int	ft_check_fractal_name(char *input)
