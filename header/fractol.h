@@ -50,7 +50,7 @@ void				color_handler(t_app *app);
 int					exit_handler(t_app *param);
 int					events_handler(int key_code, t_app *app);
 void				win_pixel_put(t_app *app, int x, int y, int color);
-void    move_handler(int key, t_app *app);
+void				move_handler(int key, t_app *app);
 int					ft_strcmp(char *s1, char *s2);
 void				fractal_select(t_app *app);
 void				fractal_init(t_fractal *f, int f_set, double cr, double ci);
@@ -58,11 +58,11 @@ void				app_init(t_app *app, int f_set, double cr, double ci);
 int					mouse_debug(int button, int x, int y, t_app *param);
 
 // draw_functions.c
-void    complex_calculator(t_app *app, int m, int j, int b);
-void    put_color(t_app *app, int iter);
-void    draw_ships(t_app *app);
-void    draw_mandelbrot(t_app *app);
-void    draw_julia(t_app *app);
+void				complex_calculator(t_app *app, int m, int j, int b);
+void				put_color(t_app *app, int iter);
+void				draw_ships(t_app *app);
+void				draw_mandelbrot(t_app *app);
+void				draw_julia(t_app *app);
 
 // input_checker_utils.c
 int					ft_check_num(char *str);
@@ -75,6 +75,6 @@ double				ft_atod(char *str);
 void				change_values(t_app *app, double n1, double n2, int flag);
 
 // prints.c
-void    print_usage_error(void);
-void    print_manual(void);
+void				print_usage_error(void);
+void				print_manual(void);
 #endif
