@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fractol.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rtodaro <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/24 14:31:10 by rtodaro           #+#    #+#             */
+/*   Updated: 2025/01/24 15:12:44 by rtodaro          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
@@ -46,16 +58,19 @@ typedef struct s_app
 }					t_app;
 
 int					key_hook(int keycode, void *param);
-void				color_handler(t_app *app);
-int					exit_handler(t_app *param);
-int					events_handler(int key_code, t_app *app);
 void				win_pixel_put(t_app *app, int x, int y, int color);
-void				move_handler(int key, t_app *app);
 int					ft_strcmp(char *s1, char *s2);
 void				fractal_select(t_app *app);
 void				fractal_init(t_fractal *f, int f_set, double cr, double ci);
 void				app_init(t_app *app, int f_set, double cr, double ci);
 int					mouse_debug(int button, int x, int y, t_app *param);
+
+// handlers
+int					mouse_handler(int key, int x, int y, t_app *app);
+void				move_handler(int key, t_app *app);
+void				color_handler(t_app *app);
+int					exit_handler(t_app *param);
+int					events_handler(int key_code, t_app *app);
 
 // draw_functions.c
 void				complex_calculator(t_app *app, int m, int j, int b);

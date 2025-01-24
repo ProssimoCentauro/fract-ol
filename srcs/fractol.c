@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fractol.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rtodaro <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/24 14:30:20 by rtodaro           #+#    #+#             */
+/*   Updated: 2025/01/24 15:10:57 by rtodaro          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
 void	win_pixel_put(t_app *app, int x, int y, int color)
@@ -19,32 +31,6 @@ void	fractal_select(t_app *app)
 		draw_julia(app);
 	else if (f->set == 2)
 		draw_ships(app);
-}
-
-int	mouse_handler(int key, int x, int y, t_app *app)
-{
-	t_fractal	*f;
-	double		mouse_x_rel;
-	double		mouse_y_rel;
-
-	f = &app->f;
-	change_values(app, x, y, 3);
-	mouse_x_rel = (x / (double)app->width) * (3.0 / f->zoom);
-	mouse_y_rel = (y / (double)app->height) * (3.0 / f->zoom);
-	if (key == 5)
-	{
-		f->zoom /= 1.2;
-		f->right -= mouse_x_rel * (1 - 1 / 1.2);
-		f->up -= mouse_y_rel * (1 - 1 / 1.2);
-	}
-	else if (key == 4)
-	{
-		f->zoom *= 1.2;
-		f->right += mouse_x_rel * (1 - 1 / 1.2);
-		f->up += mouse_y_rel * (1 - 1 / 1.2);
-	}
-	fractal_select(app);
-	return (0);
 }
 
 int	main(int ac, char **av)

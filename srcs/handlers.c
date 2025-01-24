@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handlers.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rtodaro <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/24 14:30:24 by rtodaro           #+#    #+#             */
+/*   Updated: 2025/01/24 15:10:49 by rtodaro          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
 int	events_handler(int key, t_app *app)
@@ -66,4 +78,30 @@ void	color_handler(t_app *app)
 		draw_julia(app);
 	else if (f->set == 2)
 		draw_ships(app);
+}
+
+int	mouse_handler(int key, int x, int y, t_app *app)
+{
+	t_fractal	*f;
+	double		normalized_mouse_x;
+	double		normalized_mouse_y;
+
+	f = &app->f;
+	change_values(app, x, y, 3);
+	normalized_mouse_x = (x / (double)app->width) * (3.0 / f->zoom);
+	normalized_mouse_y = (y / (double)app->height) * (3.0 / f->zoom);
+	if (key == 5)
+	{
+		f->zoom /= 1.2;
+		f->right -= normalized_mouse_x * (1 - 1 / 1.2);
+		f->up -= normalized_mouse_y * (1 - 1 / 1.2);
+	}
+	else if (key == 4)
+	{
+		f->zoom *= 1.2;
+		f->right += normalized_mouse_x * (1 - 1 / 1.2);
+		f->up += normalized_mouse_y * (1 - 1 / 1.2);
+	}
+	fractal_select(app);
+	return (0);
 }
