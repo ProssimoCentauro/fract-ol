@@ -9,7 +9,7 @@
 on Debian based:
 ```
 sudo apt update
-sudo apt install -y libx11-dev libxext-dev libxrandr-dev libxi-dev libxcursor-dev make
+sudo apt install -y libx11-dev libxext-dev libxrandr-dev libxi-dev libxcursor-dev libbsd-dev make
 ```
 on Arch based:
 ```
